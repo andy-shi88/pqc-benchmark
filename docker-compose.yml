@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  pqc-api-unconstrained:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pqc-benchmark-api-unconstrained
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./app.py:/app/app.py
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '1.0'
+          memory: 512M
+
+  pqc-api-moderate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pqc-benchmark-api-moderate
+    ports:
+      - "5006:5005"
+    volumes:
+      - ./app.py:/app/app.py
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+        reservations:
+          cpus: '0.5'
+          memory: 128M
+
+  pqc-api-extreme:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pqc-benchmark-api-extreme
+    ports:
+      - "5007:5005"
+    volumes:
+      - ./app.py:/app/app.py
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 64M

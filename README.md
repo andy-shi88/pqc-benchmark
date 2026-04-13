@@ -4,6 +4,8 @@ A simple Flask REST API for benchmarking Post-Quantum Cryptography operations.
 
 ## Setup
 
+### Local Development
+
 1. Activate the virtual environment:
    ```bash
    source .venv/bin/activate
@@ -14,10 +16,29 @@ A simple Flask REST API for benchmarking Post-Quantum Cryptography operations.
    pip install -r requirements.txt
    ```
 
+### Docker Setup
+
+Run with Docker Compose (recommended):
+```bash
+docker-compose up
+```
+
+Or build and run manually:
+```bash
+docker build -t pqc-benchmark .
+docker run -p 5005:5005 pqc-benchmark
+```
+
 ## Running the Application
 
+### Locally
 ```bash
 python app.py
+```
+
+### With Docker
+```bash
+docker-compose up
 ```
 
 The API will be available at `http://localhost:5005`
