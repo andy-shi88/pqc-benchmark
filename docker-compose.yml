@@ -29,7 +29,7 @@ services:
       - ./app.py:/app/app.py
       - ./crypto:/app/crypto
       - ./results:/app/results
-    command: ["python3", "app.py", "generate"]
+    command: ["python3", "app.py"]
     deploy:
       resources:
         limits:
@@ -48,7 +48,7 @@ services:
       - ./app.py:/app/app.py
       - ./crypto:/app/crypto
       - ./results:/app/results
-    command: ["python3", "app.py", "generate"]
+    command: ["python3", "app.py"]
     deploy:
       resources:
         limits:
