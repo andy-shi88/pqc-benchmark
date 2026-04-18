@@ -5,6 +5,10 @@ import tracemalloc
 import csv
 from datetime import datetime
 from crypto import PQCrypto, RegularCrypto, RegularSignature, PQSignature
+import gc
+# Disable automatic garbage collection
+gc.disable()
+
 
 # Supported OQS KEM algorithms
 SUPPORTED_PQ_KEM_ALGORITHMS = [
@@ -35,6 +39,8 @@ SUPPORTED_PQ_SIGNATURE_ALGORITHMS = [
 
 
 def main():
+    # Check if it is disabled
+    print(f"GC: {gc.isenabled()}")  # Returns False
     print(f"supported sign: {oqs.get_supported_sig_mechanisms()}")
     import os
     os.makedirs('results', exist_ok=True)
