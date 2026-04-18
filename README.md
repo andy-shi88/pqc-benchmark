@@ -29,50 +29,31 @@ docker build -t pqc-benchmark .
 
 The CLI supports three commands:
 
-#### Generate Key Pair
+#### Run The Benchmark
 ```bash
-python app.py generate
+python app.py
 ```
 
-#### Sign Data
-```bash
-python app.py sign
-```
-
-#### Verify Signature
-```bash
-python app.py verify
-```
 
 ### With Docker
 
-#### Generate Key Pair
 ```bash
-docker run --rm pqc-benchmark python app.py generate
+docker run --rm pqc-benchmark python app.py
 ```
 
-#### Sign Data
-```bash
-docker run --rm pqc-benchmark python app.py sign
-```
-
-#### Verify Signature
-```bash
-docker run --rm pqc-benchmark python app.py verify
-```
 
 ### With Docker Compose
 
-Docker Compose runs different resource-constrained scenarios. By default, each service runs the `generate` command. You can modify the command in docker-compose.yml or run specific commands:
+Docker Compose runs different resource-constrained scenarios. 
 
 ```bash
 # Run all scenarios with default command (generate)
 docker-compose up
 
 # Run specific scenario with custom command
-docker-compose run --rm pqc-benchmark-unconstrained python app.py sign
-docker-compose run --rm pqc-benchmark-moderate python app.py verify
-docker-compose run --rm pqc-benchmark-extreme python app.py generate
+docker-compose run --rm pqc-benchmark-unconstrained python app.py
+docker-compose run --rm pqc-benchmark-moderate python app.py
+docker-compose run --rm pqc-benchmark-extreme python app.py
 ```
 
 ## Resource Scenarios
@@ -83,13 +64,5 @@ docker-compose run --rm pqc-benchmark-extreme python app.py generate
 
 ## Output
 
-Each command outputs:
-- Operation name
-- Time taken (in seconds)
-- Additional metrics (key/signature size, validation result)
+Each command outputs a file mapped by docker-compose to ./results
 
-## Notes
-
-- Uses Dilithium2 post-quantum signature algorithm
-- All time measurements are in seconds with 6 decimal precision
-- Requires liboqs library with Python bindings
