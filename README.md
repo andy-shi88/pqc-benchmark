@@ -1,6 +1,6 @@
-# PQC Benchmark API
+# PQC Benchmark CLI
 
-A simple Flask REST API for benchmarking Post-Quantum Cryptography operations.
+A command-line tool for benchmarking Post-Quantum Cryptography operations using liboqs (Dilithium2).
 
 ## Setup
 
@@ -18,99 +18,78 @@ A simple Flask REST API for benchmarking Post-Quantum Cryptography operations.
 
 ### Docker Setup
 
-Run with Docker Compose (recommended):
-```bash
-docker-compose up
-```
-
-Or build and run manually:
+Build the Docker image:
 ```bash
 docker build -t pqc-benchmark .
-docker run -p 5005:5005 pqc-benchmark
 ```
 
 ## Running the Application
 
 ### Locally
+
+The CLI supports three commands:
+
+#### Generate Key Pair
 ```bash
-python app.py
+python app.py generate
+```
+
+#### Sign Data
+```bash
+python app.py sign
+```
+
+#### Verify Signature
+```bash
+python app.py verify
 ```
 
 ### With Docker
+
+#### Generate Key Pair
 ```bash
+docker run --rm pqc-benchmark python app.py generate
+```
+
+#### Sign Data
+```bash
+docker run --rm pqc-benchmark python app.py sign
+```
+
+#### Verify Signature
+```bash
+docker run --rm pqc-benchmark python app.py verify
+```
+
+### With Docker Compose
+
+Docker Compose runs different resource-constrained scenarios. By default, each service runs the `generate` command. You can modify the command in docker-compose.yml or run specific commands:
+
+```bash
+# Run all scenarios with default command (generate)
 docker-compose up
+
+# Run specific scenario with custom command
+docker-compose run --rm pqc-benchmark-unconstrained python app.py sign
+docker-compose run --rm pqc-benchmark-moderate python app.py verify
+docker-compose run --rm pqc-benchmark-extreme python app.py generate
 ```
 
-The API will be available at `http://localhost:5005`
+## Resource Scenarios
 
-## Endpoints
+- **Unconstrained**: 1.0 CPU, 512M memory
+- **Moderate**: 0.5 CPU, 128M memory
+- **Extreme**: 0.25 CPU, 64M memory
 
-### GET /health-check
-Health check endpoint that returns the service status.
+## Output
 
-**Example:**
-```bash
-curl http://localhost:5005/health-check
-```
-
-**Response:**
-```json
-{
-  "status": "healthy",
-  "message": "Service is running"
-}
-```
-
-### POST /generate-key
-Generates a key and returns the time taken for the operation.
-
-**Example:**
-```bash
-curl -X POST http://localhost:5005/generate-key
-```
-
-**Response:**
-```json
-{
-  "time_taken": "0.000012",
-  "operation": "generate_key"
-}
-```
-
-### POST /sign
-Signs data and returns the time taken for the operation.
-
-**Example:**
-```bash
-curl -X POST http://localhost:5005/sign
-```
-
-**Response:**
-```json
-{
-  "time_taken": "0.000008",
-  "operation": "sign"
-}
-```
-
-### POST /verify
-Verifies a signature and returns the time taken for the operation.
-
-**Example:**
-```bash
-curl -X POST http://localhost:5005/verify
-```
-
-**Response:**
-```json
-{
-  "time_taken": "0.000010",
-  "operation": "verify"
-}
-```
+Each command outputs:
+- Operation name
+- Time taken (in seconds)
+- Additional metrics (key/signature size, validation result)
 
 ## Notes
 
+- Uses Dilithium2 post-quantum signature algorithm
 - All time measurements are in seconds with 6 decimal precision
-- The server runs on port 5005 by default
-- Debug mode is enabled for development
+- Requires liboqs library with Python bindings

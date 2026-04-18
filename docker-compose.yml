@@ -1,18 +1,16 @@
 version: '3.8'
 
 services:
-  pqc-api-unconstrained:
+  pqc-benchmark-unconstrained:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pqc-benchmark-api-unconstrained
-    ports:
-      - "5005:5005"
+    container_name: pqc-benchmark-unconstrained
     volumes:
       - ./app.py:/app/app.py
-    environment:
-      - FLASK_ENV=development
-    restart: unless-stopped
+      - ./crypto:/app/crypto
+      - ./results:/app/results
+    command: ["python3", "app.py"]
     deploy:
       resources:
         limits:
@@ -22,18 +20,16 @@ services:
           cpus: '1.0'
           memory: 512M
 
-  pqc-api-moderate:
+  pqc-benchmark-moderate:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pqc-benchmark-api-moderate
-    ports:
-      - "5006:5005"
+    container_name: pqc-benchmark-moderate
     volumes:
       - ./app.py:/app/app.py
-    environment:
-      - FLASK_ENV=development
-    restart: unless-stopped
+      - ./crypto:/app/crypto
+      - ./results:/app/results
+    command: ["python3", "app.py", "generate"]
     deploy:
       resources:
         limits:
@@ -43,18 +39,16 @@ services:
           cpus: '0.5'
           memory: 128M
 
-  pqc-api-extreme:
+  pqc-benchmark-extreme:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pqc-benchmark-api-extreme
-    ports:
-      - "5007:5005"
+    container_name: pqc-benchmark-extreme
     volumes:
       - ./app.py:/app/app.py
-    environment:
-      - FLASK_ENV=development
-    restart: unless-stopped
+      - ./crypto:/app/crypto
+      - ./results:/app/results
+    command: ["python3", "app.py", "generate"]
     deploy:
       resources:
         limits:
