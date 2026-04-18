@@ -68,9 +68,6 @@ def main():
         print(f"Iterations: {iterations}")
         print()
         # Track timings for each operation
-        generate_timings = []
-        sign_timings = []
-        verify_timings = []
         print("Running operations...")
         rep = 5
         results = {
@@ -79,8 +76,11 @@ def main():
             "oom_errors": 0,
             "repetitions": []
         }
-        tracemalloc.start()
         for j in range(rep):
+            tracemalloc.start()
+            generate_timings = []
+            sign_timings = []
+            verify_timings = []
             for i in range(iterations):
                 try:
                     # Generate key
@@ -104,6 +104,10 @@ def main():
                 
                 if (i + 1) % 10 == 0:
                     print(f"  Completed {i + 1}/{iterations} iterations")
+            
+            # Get memory info for this rep
+            current, peak = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
             
             # Calculate medians
             median_generate = statistics.median(generate_timings)
@@ -135,23 +139,18 @@ def main():
                 "decapsulate": {
                     "total_time": total_verify,
                     "median_time": median_verify
-                }
+                },
+                "memory_current_mb": current / 10**6,
+                "memory_peak_mb": peak / 10**6
             }
             results["repetitions"].append(rep_result)
             
             print(f"Completed repetition {j+1}/{rep}")
-        current, peak = tracemalloc.get_traced_memory()
-        tracemalloc.stop()
-
-        # Add memory info to results
-        results["memory_current_mb"] = current / 10**6
-        results["memory_peak_mb"] = peak / 10**6
 
         # Print final results
         print("\n" + "="*50)
         print(f"Benchmark Results for {algorithm}")
         print("="*50)
-        print(f"Memory -> Current: {current / 10**6:.2f} MB; Peak: {peak / 10**6:.2f} MB")
         print(results)
         
         # Append results to CSV
@@ -178,8 +177,8 @@ def main():
                     'ciphertext_size': rep_result['encapsulate']['ciphertext_size'],
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
-                    'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb'],
+                    'memory_current_mb': rep_result['memory_current_mb'],
+                    'memory_peak_mb': rep_result['memory_peak_mb'],
                     'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
@@ -199,10 +198,6 @@ def main():
         print(f"Running benchmark with algorithm: {algorithm}")
         print(f"Iterations: {iterations}")
         print()
-        # Track timings for each operation
-        generate_timings = []
-        sign_timings = []
-        verify_timings = []
         print("Running operations...")
         rep = 5
         results = {
@@ -211,8 +206,12 @@ def main():
             "oom_errors": 0,
             "repetitions": []
         }
-        tracemalloc.start()
         for j in range(rep):
+            tracemalloc.start()
+            # Track timings for each operation
+            generate_timings = []
+            sign_timings = []
+            verify_timings = []
             for i in range(iterations):
                 try:
                     # Generate key
@@ -272,18 +271,19 @@ def main():
             results["repetitions"].append(rep_result)
             
             print(f"Completed repetition {j+1}/{rep}")
-        current, peak = tracemalloc.get_traced_memory()
-        tracemalloc.stop()
-
-        # Add memory info to results
-        results["memory_current_mb"] = current / 10**6
-        results["memory_peak_mb"] = peak / 10**6
+            
+            # Get memory info for this rep
+            current, peak = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+            
+            # Store memory in rep_result
+            rep_result["memory_current_mb"] = current / 10**6
+            rep_result["memory_peak_mb"] = peak / 10**6
 
         # Print final results
         print("\n" + "="*50)
         print(f"Benchmark Results for {algorithm}")
         print("="*50)
-        print(f"Memory -> Current: {current / 10**6:.2f} MB; Peak: {peak / 10**6:.2f} MB")
         print(results)
         
         # Append results to CSV
@@ -310,8 +310,8 @@ def main():
                     'ciphertext_size': rep_result['encapsulate']['ciphertext_size'],
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
-                    'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb'],
+                    'memory_current_mb': rep_result['memory_current_mb'],
+                    'memory_peak_mb': rep_result['memory_peak_mb'],
                     'oom_errors': results['oom_errors'],
                 }
                 writer.writerow(row)
@@ -331,10 +331,7 @@ def main():
         print(f"Running benchmark with algorithm: {algorithm}")
         print(f"Iterations: {iterations}")
         print()
-        # Track timings for each operation
-        generate_timings = []
-        sign_timings = []
-        verify_timings = []
+        
         print("Running operations...")
         rep = 5
         results = {
@@ -343,8 +340,12 @@ def main():
             "oom_errors": 0,
             "repetitions": []
         }
-        tracemalloc.start()
         for j in range(rep):
+            tracemalloc.start()
+            # Track timings for each operation
+            generate_timings = []
+            sign_timings = []
+            verify_timings = []
             for i in range(iterations):
                 try:
                     # Generate key
@@ -404,18 +405,19 @@ def main():
             results["repetitions"].append(rep_result)
             
             print(f"Completed repetition {j+1}/{rep}")
-        current, peak = tracemalloc.get_traced_memory()
-        tracemalloc.stop()
-
-        # Add memory info to results
-        results["memory_current_mb"] = current / 10**6
-        results["memory_peak_mb"] = peak / 10**6
+            
+            # Get memory info for this rep
+            current, peak = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+            
+            # Store memory in rep_result
+            rep_result["memory_current_mb"] = current / 10**6
+            rep_result["memory_peak_mb"] = peak / 10**6
 
         # Print final results
         print("\n" + "="*50)
         print(f"Benchmark Results for {algorithm}")
         print("="*50)
-        print(f"Memory -> Current: {current / 10**6:.2f} MB; Peak: {peak / 10**6:.2f} MB")
         print(results)
         
         # Append results to CSV
@@ -442,8 +444,8 @@ def main():
                     'ciphertext_size': rep_result['encapsulate']['ciphertext_size'],
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
-                    'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb'],
+                    'memory_current_mb': rep_result['memory_current_mb'],
+                    'memory_peak_mb': rep_result['memory_peak_mb'],
                     'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
@@ -463,10 +465,6 @@ def main():
         print(f"Running benchmark with algorithm: {algorithm}")
         print(f"Iterations: {iterations}")
         print()
-        # Track timings for each operation
-        generate_timings = []
-        sign_timings = []
-        verify_timings = []
         print("Running operations...")
         rep = 5
         results = {
@@ -475,8 +473,12 @@ def main():
             "oom_errors": 0,
             "repetitions": []
         }
-        tracemalloc.start()
         for j in range(rep):
+            tracemalloc.start()
+            # Track timings for each operation
+            generate_timings = []
+            sign_timings = []
+            verify_timings = []
             for i in range(iterations):
                 try:
                     # Generate key
@@ -536,18 +538,19 @@ def main():
             results["repetitions"].append(rep_result)
             
             print(f"Completed repetition {j+1}/{rep}")
-        current, peak = tracemalloc.get_traced_memory()
-        tracemalloc.stop()
-
-        # Add memory info to results
-        results["memory_current_mb"] = current / 10**6
-        results["memory_peak_mb"] = peak / 10**6
+            
+            # Get memory info for this rep
+            current, peak = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+            
+            # Store memory in rep_result
+            rep_result["memory_current_mb"] = current / 10**6
+            rep_result["memory_peak_mb"] = peak / 10**6
 
         # Print final results
         print("\n" + "="*50)
         print(f"Benchmark Results for {algorithm}")
         print("="*50)
-        print(f"Memory -> Current: {current / 10**6:.2f} MB; Peak: {peak / 10**6:.2f} MB")
         print(results)
         
         # Append results to CSV
@@ -574,8 +577,8 @@ def main():
                     'ciphertext_size': rep_result['encapsulate']['ciphertext_size'],
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
-                    'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb'],
+                    'memory_current_mb': rep_result['memory_current_mb'],
+                    'memory_peak_mb': rep_result['memory_peak_mb'],
                     'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
