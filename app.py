@@ -49,7 +49,7 @@ def main():
             'generate_total_time', 'generate_median_time', 'public_key_size',
             'encapsulate_total_time', 'encapsulate_median_time', 'ciphertext_size',
             'decapsulate_total_time', 'decapsulate_median_time',
-            'memory_current_mb', 'memory_peak_mb'
+            'memory_current_mb', 'memory_peak_mb', 'oom_errors'
         ]
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -70,22 +70,31 @@ def main():
         results = {
             "algorithm": algorithm,
             "iterations": iterations,
+            "oom_errors": 0,
             "repetitions": []
         }
         tracemalloc.start()
         for j in range(rep):
             for i in range(iterations):
-                # Generate key
-                gen_time = pqc.generate_key()
-                generate_timings.append(gen_time)
-                
-                # Encapsulate (sign_data method)
-                sign_time, ciphertext = pqc.sign_data()
-                sign_timings.append(sign_time)
-                
-                # Decapsulate (verify_signature method)
-                verify_time = pqc.verify_signature(signature=ciphertext)
-                verify_timings.append(verify_time)
+                try:
+                    # Generate key
+                    gen_time = pqc.generate_key()
+                    generate_timings.append(gen_time)
+                    
+                    # Encapsulate (sign_data method)
+                    sign_time, ciphertext = pqc.sign_data()
+                    sign_timings.append(sign_time)
+                    
+                    # Decapsulate (verify_signature method)
+                    verify_time = pqc.verify_signature(signature=ciphertext)
+                    verify_timings.append(verify_time)
+                except MemoryError as e:
+                    results["oom_errors"] += 1
+                    print(f"  OOM Error at iteration {i + 1}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"  Error at iteration {i + 1}: {type(e).__name__}: {e}")
+                    continue
                 
                 if (i + 1) % 10 == 0:
                     print(f"  Completed {i + 1}/{iterations} iterations")
@@ -146,7 +155,7 @@ def main():
                 'generate_total_time', 'generate_median_time', 'public_key_size',
                 'encapsulate_total_time', 'encapsulate_median_time', 'ciphertext_size',
                 'decapsulate_total_time', 'decapsulate_median_time',
-                'memory_current_mb', 'memory_peak_mb'
+                'memory_current_mb', 'memory_peak_mb', 'oom_errors'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
@@ -164,7 +173,8 @@ def main():
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
                     'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb']
+                    'memory_peak_mb': results['memory_peak_mb'],
+                    'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
         
@@ -192,22 +202,31 @@ def main():
         results = {
             "algorithm": algorithm,
             "iterations": iterations,
+            "oom_errors": 0,
             "repetitions": []
         }
         tracemalloc.start()
         for j in range(rep):
             for i in range(iterations):
-                # Generate key
-                gen_time = pqc.generate_key()
-                generate_timings.append(gen_time)
-                
-                # Encapsulate (sign_data method)
-                sign_time, ciphertext = pqc.sign_data()
-                sign_timings.append(sign_time)
-                
-                # Decapsulate (verify_signature method)
-                verify_time = pqc.verify_signature(signature=ciphertext)
-                verify_timings.append(verify_time)
+                try:
+                    # Generate key
+                    gen_time = pqc.generate_key()
+                    generate_timings.append(gen_time)
+                    
+                    # Encapsulate (sign_data method)
+                    sign_time, ciphertext = pqc.sign_data()
+                    sign_timings.append(sign_time)
+                    
+                    # Decapsulate (verify_signature method)
+                    verify_time = pqc.verify_signature(signature=ciphertext)
+                    verify_timings.append(verify_time)
+                except MemoryError as e:
+                    results["oom_errors"] += 1
+                    print(f"  OOM Error at iteration {i + 1}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"  Error at iteration {i + 1}: {type(e).__name__}: {e}")
+                    continue
                 
                 if (i + 1) % 10 == 0:
                     print(f"  Completed {i + 1}/{iterations} iterations")
@@ -268,7 +287,7 @@ def main():
                 'generate_total_time', 'generate_median_time', 'public_key_size',
                 'encapsulate_total_time', 'encapsulate_median_time', 'ciphertext_size',
                 'decapsulate_total_time', 'decapsulate_median_time',
-                'memory_current_mb', 'memory_peak_mb'
+                'memory_current_mb', 'memory_peak_mb', 'oom_errors'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
@@ -286,7 +305,8 @@ def main():
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
                     'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb']
+                    'memory_peak_mb': results['memory_peak_mb'],
+                    'oom_errors': results['oom_errors'],
                 }
                 writer.writerow(row)
         
@@ -314,22 +334,31 @@ def main():
         results = {
             "algorithm": algorithm,
             "iterations": iterations,
+            "oom_errors": 0,
             "repetitions": []
         }
         tracemalloc.start()
         for j in range(rep):
             for i in range(iterations):
-                # Generate key
-                gen_time = pqc.generate_key()
-                generate_timings.append(gen_time)
-                
-                # Encapsulate (sign_data method)
-                sign_time, ciphertext = pqc.sign_data()
-                sign_timings.append(sign_time)
-                
-                # Decapsulate (verify_signature method)
-                verify_time = pqc.verify_signature(signature=ciphertext)
-                verify_timings.append(verify_time)
+                try:
+                    # Generate key
+                    gen_time = pqc.generate_key()
+                    generate_timings.append(gen_time)
+                    
+                    # Encapsulate (sign_data method)
+                    sign_time, ciphertext = pqc.sign_data()
+                    sign_timings.append(sign_time)
+                    
+                    # Decapsulate (verify_signature method)
+                    verify_time = pqc.verify_signature(signature=ciphertext)
+                    verify_timings.append(verify_time)
+                except MemoryError as e:
+                    results["oom_errors"] += 1
+                    print(f"  OOM Error at iteration {i + 1}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"  Error at iteration {i + 1}: {type(e).__name__}: {e}")
+                    continue
                 
                 if (i + 1) % 10 == 0:
                     print(f"  Completed {i + 1}/{iterations} iterations")
@@ -390,7 +419,7 @@ def main():
                 'generate_total_time', 'generate_median_time', 'public_key_size',
                 'encapsulate_total_time', 'encapsulate_median_time', 'ciphertext_size',
                 'decapsulate_total_time', 'decapsulate_median_time',
-                'memory_current_mb', 'memory_peak_mb'
+                'memory_current_mb', 'memory_peak_mb', 'oom_errors'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
@@ -408,7 +437,8 @@ def main():
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
                     'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb']
+                    'memory_peak_mb': results['memory_peak_mb'],
+                    'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
         
@@ -436,22 +466,31 @@ def main():
         results = {
             "algorithm": algorithm,
             "iterations": iterations,
+            "oom_errors": 0,
             "repetitions": []
         }
         tracemalloc.start()
         for j in range(rep):
             for i in range(iterations):
-                # Generate key
-                gen_time = pqc.generate_key()
-                generate_timings.append(gen_time)
-                
-                # Encapsulate (sign_data method)
-                sign_time, ciphertext = pqc.sign_data()
-                sign_timings.append(sign_time)
-                
-                # Decapsulate (verify_signature method)
-                verify_time = pqc.verify_signature(signature=ciphertext)
-                verify_timings.append(verify_time)
+                try:
+                    # Generate key
+                    gen_time = pqc.generate_key()
+                    generate_timings.append(gen_time)
+                    
+                    # Encapsulate (sign_data method)
+                    sign_time, ciphertext = pqc.sign_data()
+                    sign_timings.append(sign_time)
+                    
+                    # Decapsulate (verify_signature method)
+                    verify_time = pqc.verify_signature(signature=ciphertext)
+                    verify_timings.append(verify_time)
+                except MemoryError as e:
+                    results["oom_errors"] += 1
+                    print(f"  OOM Error at iteration {i + 1}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"  Error at iteration {i + 1}: {type(e).__name__}: {e}")
+                    continue
                 
                 if (i + 1) % 10 == 0:
                     print(f"  Completed {i + 1}/{iterations} iterations")
@@ -512,7 +551,7 @@ def main():
                 'generate_total_time', 'generate_median_time', 'public_key_size',
                 'encapsulate_total_time', 'encapsulate_median_time', 'ciphertext_size',
                 'decapsulate_total_time', 'decapsulate_median_time',
-                'memory_current_mb', 'memory_peak_mb'
+                'memory_current_mb', 'memory_peak_mb', 'oom_errors'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
@@ -530,7 +569,8 @@ def main():
                     'decapsulate_total_time': rep_result['decapsulate']['total_time'],
                     'decapsulate_median_time': rep_result['decapsulate']['median_time'],
                     'memory_current_mb': results['memory_current_mb'],
-                    'memory_peak_mb': results['memory_peak_mb']
+                    'memory_peak_mb': results['memory_peak_mb'],
+                    'oom_errors': results['oom_errors']
                 }
                 writer.writerow(row)
         
