@@ -16,7 +16,11 @@ class PQCrypto:
     def generate_key(self):
         """Generate key pair with time tracking"""
         start_time = time.time()
-        self.public_key = self.kem.generate_keypair()
+        if self.algorithm in ['ML-KEM-512', 'ML-KEM-768', 'ML-KEM-1024']:
+            seed = b"This is a 64-byte seed for key generation" + b"\x00" * 23
+            self.public_key = self.kem.generate_keypair_seed(seed)
+        else:
+            self.public_key = self.kem.generate_keypair()
         self.secret_key = self.kem.export_secret_key()
         end_time = time.time()
         return end_time - start_time
