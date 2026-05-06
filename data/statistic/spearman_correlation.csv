@@ -1,0 +1,13 @@
+Resource Level,Metric,Spearman_Rho,P_Value,Significant
+Unconstrained,generate_median_time,0.22439477467507862,0.09955583199743283,False
+Unconstrained,encapsulate_median_time,0.21672528067197722,0.11198947796358692,False
+Unconstrained,decapsulate_median_time,0.03239238340924577,0.8143855939919401,False
+Unconstrained,ciphertext_size,0.38924947208076144,0.0033113923493536374,True
+Moderate,generate_median_time,0.20723406380200668,0.12898366273336875,False
+Moderate,encapsulate_median_time,0.23146212237648098,0.08907131266855293,False
+Moderate,decapsulate_median_time,0.04652504972391577,0.7358933331273098,False
+Moderate,ciphertext_size,0.38924947208076144,0.0033113923493536374,True
+Extreme,generate_median_time,0.2070439407932558,0.129342915287965,False
+Extreme,encapsulate_median_time,0.24581178007571983,0.07045348165232107,False
+Extreme,decapsulate_median_time,0.0519548465660979,0.7063876578225308,False
+Extreme,ciphertext_size,0.38924947208076144,0.0033113923493536374,True

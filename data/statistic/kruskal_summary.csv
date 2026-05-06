@@ -1,0 +1,10 @@
+Resource Level,Operation,H-Statistic,P-Value,Significant
+Unconstrained,generate_median_time,65.90288895892425,4.517023343412084e-09,True
+Unconstrained,encapsulate_median_time,67.10353842923142,2.7278713778342728e-09,True
+Unconstrained,decapsulate_median_time,65.92742494833081,4.47078357474281e-09,True
+Moderate,generate_median_time,66.9161884098544,2.9515402452446234e-09,True
+Moderate,encapsulate_median_time,67.76400251950874,2.065540278745652e-09,True
+Moderate,decapsulate_median_time,66.81694778835383,3.077306706240729e-09,True
+Extreme,generate_median_time,68.2483307670773,1.6839213676806069e-09,True
+Extreme,encapsulate_median_time,68.5832449740171,1.4618797754466352e-09,True
+Extreme,decapsulate_median_time,68.44076569088904,1.552541793568659e-09,True
