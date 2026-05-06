@@ -66,3 +66,25 @@ docker-compose run --rm pqc-benchmark-extreme python app.py
 
 Each command outputs a file mapped by docker-compose to ./results
 
+
+### Output Data
+
+- Statistic Tests
+
+Statistic test are stored in `data/statistics/` and include:
+- kruskal_summary.csv and dunn_summary.csv: Summary of the Kruskal-Wallis and Dunn's tests results, including p-values and significance levels.
+- anova.csv: Summary of the ANOVA test results, including F-statistic and p-value.
+- lmm.csv: Summary of the Linear Mixed Model results, including fixed effects estimates and significance levels.
+- spearman_correlation.csv: Summary of the Spearman's rank correlation results, including correlation coefficients and p-values.
+
+
+- Raw Data
+
+This data is stored in `data/pqc_recap.xlsx`, this include compilation of all raw data collected during the benchmark, such as execution times, memory usage, and other relevant metrics for each scenario and operation type. Also includes all measurement requirement based on the defined scenarios (unconstrained, moderate, extreme) and operations (key generation, signing, verification) as stated in the assignment.
+
+
+- Python Notebook
+
+Stored in `data/komjar-pqc-report.ipynb`. Plots and visualizations are stored here.
+
+This notebook is also used for generating statistical test and analysis from `data/pqc_recap.xlsx` and the results are stored in `data/statistics/` as mentioned above.
