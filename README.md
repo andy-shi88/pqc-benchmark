@@ -72,7 +72,7 @@ Each command outputs a file mapped by docker-compose to ./results
 - Statistic Tests
 
 Statistic test are stored in `data/statistics/` and include:
-- kruskal_summary.csv and dunn_summary.csv: Summary of the Kruskal-Wallis and Dunn's tests results, including p-values and significance levels.
+- normality, kruskal and dunn test results in `data/statistics/statistical_analysis_results.xlsx`.
 - anova.csv: Summary of the ANOVA test results, including F-statistic and p-value.
 - lmm.csv: Summary of the Linear Mixed Model results, including fixed effects estimates and significance levels.
 - spearman_correlation.csv: Summary of the Spearman's rank correlation results, including correlation coefficients and p-values.
