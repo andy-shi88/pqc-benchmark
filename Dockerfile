@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && ln -s /usr/bin/python3 /usr/bin/python
 
 # Build and install liboqs from source
-RUN git clone --depth 1 --branch 0.14.0 https://github.com/open-quantum-safe/liboqs.git /tmp/liboqs && \
+RUN git clone --depth 1 --branch 0.16.0 https://github.com/open-quantum-safe/liboqs.git /tmp/liboqs && \
     cd /tmp/liboqs && \
     mkdir build && \
     cd build && \

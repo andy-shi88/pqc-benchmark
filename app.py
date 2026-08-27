@@ -13,6 +13,7 @@ gc.disable()
 # Supported OQS KEM algorithms
 SUPPORTED_PQ_KEM_ALGORITHMS = [
     'BIKE-L1',
+    'HQC-1',
     'ML-KEM-512', 'ML-KEM-768', 'ML-KEM-1024',
     'FrodoKEM-640-AES',
 ]
@@ -27,14 +28,14 @@ SUPPORTED_REG_SIGNATURE_ALGORITHMS = [
 
 SUPPORTED_PQ_SIGNATURE_ALGORITHMS = [
     # CRYSTALS-Dilithium / ML-DSA (Module-Lattice-Based Digital Signature Algorithm)
-    'Dilithium2',     # Equivalent to ML-DSA-44 (NIST Level 2 security)
-    'Dilithium3',     # Equivalent to ML-DSA-65 (NIST Level 3 security)
-    'Dilithium5',     # Equivalent to ML-DSA-87 (NIST Level 5 security)
+    # 'Dilithium2',     # Equivalent to ML-DSA-44 (NIST Level 2 security)
+    # 'Dilithium3',     # Equivalent to ML-DSA-65 (NIST Level 3 security)
+    # 'Dilithium5',     # Equivalent to ML-DSA-87 (NIST Level 5 security)
     
     # SPHINCS+ / SLH-DSA (Stateless Hash-Based Digital Signature Algorithm)
-    'SPHINCS+-SHA2-128s-simple',  # Equivalent to SLH-DSA-128s (small signature variant)
-    'SPHINCS+-SHA2-192s-simple',  # Equivalent to SLH-DSA-192s (small signature variant)
-    'SPHINCS+-SHA2-256s-simple',  # Equivalent to SLH-DSA-256s (small signature variant)
+    # 'SPHINCS+-SHA2-128s-simple',  # Equivalent to SLH-DSA-128s (small signature variant)
+    # 'SPHINCS+-SHA2-192s-simple',  # Equivalent to SLH-DSA-192s (small signature variant)
+    # 'SPHINCS+-SHA2-256s-simple',  # Equivalent to SLH-DSA-256s (small signature variant)
 ]
 
 
@@ -230,6 +231,7 @@ def main():
     # Check if it is disabled
     print(f"GC: {gc.isenabled()}")  # Returns False
     print(f"supported sign: {oqs.get_supported_sig_mechanisms()}")
+    print(f"supported kem: {oqs.get_supported_kem_mechanisms()}")
     import os
     os.makedirs('results', exist_ok=True)
     iteration = 100
@@ -253,8 +255,8 @@ def main():
     
     # Create PQCrypto instance with specified algorithm    
     for algo_idx, algorithm in enumerate(SUPPORTED_PQ_KEM_ALGORITHMS):
-        pqc = PQCrypto(algorithm=algorithm)
         print(f"Running benchmark with algorithm: {algorithm}")
+        pqc = PQCrypto(algorithm=algorithm)
         run_benchmark(pqc, algorithm, iteration, warmpup_iterations, final_iterations, csv_filename)
         # Sleep 30 seconds between algorithms (except after the last one)
         if algo_idx < len(SUPPORTED_PQ_KEM_ALGORITHMS) - 1:
