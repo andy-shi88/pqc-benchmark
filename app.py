@@ -33,9 +33,9 @@ SUPPORTED_PQ_SIGNATURE_ALGORITHMS = [
     'ML-DSA-87',     # Equivalent to ML-DSA-87 (NIST Level 5 security)
     
     # SPHINCS+ / SLH-DSA (Stateless Hash-Based Digital Signature Algorithm)
-    'SLH-DSA-SHA2-128s-pure',  # Equivalent to SLH-DSA-128s (small signature variant)
-    'SLH-DSA-SHA2-192s-pure',  # Equivalent to SLH-DSA-192s (small signature variant)
-    'SLH-DSA-SHA2-256s-pure',  # Equivalent to SLH-DSA-256s (small signature variant)
+    'SLH_DSA_PURE_SHA2_128S',  # Equivalent to SLH-DSA-128s (small signature variant)
+    'SLH_DSA_PURE_SHA2_192S',  # Equivalent to SLH-DSA-192s (small signature variant)
+    'SLH_DSA_PURE_SHA2_256S',  # Equivalent to SLH-DSA-256s (small signature variant)
 ]
 
 
