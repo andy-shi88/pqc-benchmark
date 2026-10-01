@@ -28,14 +28,14 @@ SUPPORTED_REG_SIGNATURE_ALGORITHMS = [
 
 SUPPORTED_PQ_SIGNATURE_ALGORITHMS = [
     # CRYSTALS-Dilithium / ML-DSA (Module-Lattice-Based Digital Signature Algorithm)
-    # 'Dilithium2',     # Equivalent to ML-DSA-44 (NIST Level 2 security)
-    # 'Dilithium3',     # Equivalent to ML-DSA-65 (NIST Level 3 security)
-    # 'Dilithium5',     # Equivalent to ML-DSA-87 (NIST Level 5 security)
+    'ML-DSA-44',     # Equivalent to ML-DSA-44 (NIST Level 2 security)
+    'ML-DSA-65',     # Equivalent to ML-DSA-65 (NIST Level 3 security)
+    'ML-DSA-87',     # Equivalent to ML-DSA-87 (NIST Level 5 security)
     
     # SPHINCS+ / SLH-DSA (Stateless Hash-Based Digital Signature Algorithm)
-    # 'SPHINCS+-SHA2-128s-simple',  # Equivalent to SLH-DSA-128s (small signature variant)
-    # 'SPHINCS+-SHA2-192s-simple',  # Equivalent to SLH-DSA-192s (small signature variant)
-    # 'SPHINCS+-SHA2-256s-simple',  # Equivalent to SLH-DSA-256s (small signature variant)
+    'SPHINCS+-SHA2-128s-simple',  # Equivalent to SLH-DSA-128s (small signature variant)
+    'SPHINCS+-SHA2-192s-simple',  # Equivalent to SLH-DSA-192s (small signature variant)
+    'SPHINCS+-SHA2-256s-simple',  # Equivalent to SLH-DSA-256s (small signature variant)
 ]
 
 
